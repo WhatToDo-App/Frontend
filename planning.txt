@@ -1,7 +1,0 @@
-- Figure out the best technologies to use to create this application
-- Create an empty list
-- Create a way to add a task
-- Create a way to remove a task
-- Create a way to view tasks
-- Create a way to mark a task as complete
-- Create a way to exit
