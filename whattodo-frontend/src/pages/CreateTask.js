@@ -4,11 +4,23 @@ import axios from 'axios';
 const CreateTask = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('/api/tasks/', { title, description });
-    
+    setError(null);
+    setSuccess(false);
+
+    try {
+      await axios.post('http://127.0.0.1:8000/api/tasks/', { title, description });
+      setTitle('');
+      setDescription('');
+      setSuccess(true);
+    } catch (error) {
+      setError("Error creating task.");
+      console.error("Error creating task:", error);
+    }
   };
 
   return (
@@ -29,6 +41,8 @@ const CreateTask = () => {
         />
         <button type="submit">Add Task</button>
       </form>
+      {success && <p>Task created successfully!</p>}
+      {error && <p>{error}</p>}
     </div>
   );
 };
