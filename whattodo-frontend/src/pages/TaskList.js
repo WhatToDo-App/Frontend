@@ -1,6 +1,6 @@
-import './TaskList.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './TaskList.css'; // Import the CSS file
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
