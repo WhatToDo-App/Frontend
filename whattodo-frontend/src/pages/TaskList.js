@@ -17,6 +17,20 @@ const TaskList = () => {
         }
     };
 
+    const toggleTaskCompletion = async (task) => {
+        try {
+            const updatedTask = { ...task, completed: !task.completed };
+            await axios.patch(`/api/tasks/${task.id}/`, updatedTask, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`, // Adjust based on your auth method
+                },
+            });
+            fetchTasks(); // Re-fetch tasks to update the list
+        } catch (error) {
+            console.error('Error toggling task completion:', error);
+        }
+    };
+
     useEffect(() => {
         fetchTasks();
     }, []);
@@ -30,6 +44,9 @@ const TaskList = () => {
                     <p>Due: {task.due_date}</p>
                     <p>Priority: {task.priority}</p>
                     <p>Status: {task.completed ? 'Completed' : 'Pending'}</p>
+                    <button onClick={() => toggleTaskCompletion(task)}>
+                        Mark as {task.completed ? 'Pending' : 'Completed'}
+                    </button>
                 </li>
             ))}
         </ul>
