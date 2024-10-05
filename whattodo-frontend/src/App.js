@@ -1,15 +1,15 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import TaskList from './pages/TaskList'; // Create this component later
-import CreateTask from './pages/CreateTask'; // Create this component later
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import MainPage from './pages/MainPage';
 
 const App = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<TaskList />} />
-      <Route path="/create" element={<CreateTask />} />
-    </Routes>
-  );
+    return (
+        <Router>
+            <Switch>
+                <Route path="/" component={MainPage} />
+            </Switch>
+        </Router>
+    );
 };
 
 export default App;
