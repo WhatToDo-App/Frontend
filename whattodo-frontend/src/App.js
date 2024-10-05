@@ -1,15 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import MainPage from './pages/MainPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CreateTask from './pages/CreateTask';
+import TaskList from './pages/TaskList';
 
-const App = () => {
+function App() {
     return (
         <Router>
-            <Switch>
-                <Route path="/" component={MainPage} />
-            </Switch>
+            <Routes>
+                <Route path="/" element={<TaskList />} />
+                <Route path="/create" element={<CreateTask />} />
+            </Routes>
         </Router>
     );
-};
+}
 
 export default App;
