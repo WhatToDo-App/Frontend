@@ -2,46 +2,38 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const TaskList = () => {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
     const fetchTasks = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/tasks/');
-        setTasks(response.data);
-      } catch (error) {
-        setError("Error fetching tasks.");
-        console.error("Error fetching tasks:", error);
-      } finally {
-        setLoading(false);
-      }
+        try {
+            const response = await axios.get('/api/tasks/', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`, // Adjust based on your auth method
+                },
+            });
+            setTasks(response.data);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
     };
 
-    fetchTasks();
-  }, []);
+    useEffect(() => {
+        fetchTasks();
+    }, []);
 
-  if (loading) return <p>Loading tasks...</p>;
-  if (error) return <p>{error}</p>;
-
-  return (
-    <div>
-      <h1>Task List</h1>
-      {tasks.length === 0 ? (
-        <p>No tasks available.</p>
-      ) : (
+    return (
         <ul>
-          {tasks.map(task => (
-            <li key={task.id}>
-              <h2>{task.title}</h2>
-              <p>{task.description}</p>
-            </li>
-          ))}
+            {tasks.map((task) => (
+                <li key={task.id}>
+                    <h3>{task.title}</h3>
+                    <p>{task.description}</p>
+                    <p>Due: {task.due_date}</p>
+                    <p>Priority: {task.priority}</p>
+                    <p>Status: {task.completed ? 'Completed' : 'Pending'}</p>
+                </li>
+            ))}
         </ul>
-      )}
-    </div>
-  );
+    );
 };
 
 export default TaskList;
