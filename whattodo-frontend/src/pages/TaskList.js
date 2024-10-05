@@ -31,6 +31,19 @@ const TaskList = () => {
         }
     };
 
+    const deleteTask = async (taskId) => {
+        try {
+            await axios.delete(`/api/tasks/${taskId}/`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`, // Adjust based on your auth method
+                },
+            });
+            fetchTasks(); // Re-fetch tasks to update the list
+        } catch (error) {
+            console.error('Error deleting task:', error);
+        }
+    };
+
     useEffect(() => {
         fetchTasks();
     }, []);
@@ -47,6 +60,7 @@ const TaskList = () => {
                     <button onClick={() => toggleTaskCompletion(task)}>
                         Mark as {task.completed ? 'Pending' : 'Completed'}
                     </button>
+                    <button onClick={() => deleteTask(task.id)}>Delete</button>
                 </li>
             ))}
         </ul>
